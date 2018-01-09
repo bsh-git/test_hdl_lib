@@ -1,0 +1,3 @@
+[submodule "bsh_hdl_lib"]
+	path = bsh_hdl_lib
+	url = ../bsh_hdl_lib
