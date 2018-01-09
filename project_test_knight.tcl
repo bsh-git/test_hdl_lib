@@ -149,8 +149,8 @@ set imported_files [import_files -fileset sources_1 $files]
 # None
 
 # Set 'sources_1' fileset properties
-set obj [get_filesets sources_1]
-set_property -name "top" -value "main_wrapper" -objects $obj
+#set obj [get_filesets sources_1]
+#set_property -name "top" -value "main_wrapper" -objects $obj
 
 # Create 'constrs_1' fileset (if not found)
 if {[string equal [get_filesets -quiet constrs_1] ""]} {
