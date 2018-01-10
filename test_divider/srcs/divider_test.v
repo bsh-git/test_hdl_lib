@@ -22,7 +22,7 @@
 
 module divider_test
    (
-    input 	       clk_in,
+    input 	 clk_in,
     output [7:0] led
     );
 
@@ -42,4 +42,23 @@ module divider_test
    assign led[1] = clk1;
    assign led[2] = clk2;
    
+
+   wire [15:0] 	 ltime = 5;
+   wire [15:0] 	 htime = 10;
+   
+   (* mark_debug = "TRUE" *) wire pwm0_out;
+   
+
+   pwd #(16) pwm0(.clk(clk0), .low_time(ltime), .high_time(htime), .out(pwm0_out));
+
+   assign led[3] = pwm0_out;
+   
+
+   
+   pwd #(16) pwm1(.clk(clk_in), .low_time(16'hf00), .high_time(16'h100), .out(led[4]));
+
+   pwd #(16) pwm2(.clk(clk_in), .low_time(16'h100), .high_time(16'hf00), .out(led[5]));
+   
+
+
 endmodule

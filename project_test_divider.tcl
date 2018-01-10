@@ -29,6 +29,7 @@
 #
 #    "F:/work/zynq/test_hdl_lib/bsh_hdl_lib/divider/fixed_divier.v"
 #    "F:/work/zynq/test_hdl_lib/bsh_hdl_lib/divider/variable_divider.v"
+#    "F:/work/zynq/test_hdl_lib/bsh_hdl_lib/pwm/pwm.v"
 #    "F:/work/zynq/test_hdl_lib/bsh_hdl_lib/ZedBoard/zed_ledports.xdc"
 #    "F:/work/zynq/test_hdl_lib/bsh_hdl_lib/ZedBoard/zed_swports.xdc"
 #
@@ -119,6 +120,7 @@ set_property -name "ip_cache_permissions" -value "read write" -objects $obj
 set_property -name "ip_output_repo" -value "$proj_dir/${project_name}.cache/ip" -objects $obj
 set_property -name "sim.ip.auto_export_scripts" -value "1" -objects $obj
 set_property -name "simulator_language" -value "Mixed" -objects $obj
+set_property -name "xpm_libraries" -value "XPM_FIFO XPM_MEMORY" -objects $obj
 
 # Create 'sources_1' fileset (if not found)
 if {[string equal [get_filesets -quiet sources_1] ""]} {
@@ -130,6 +132,7 @@ set obj [get_filesets sources_1]
 set files [list \
  "[file normalize "$origin_dir/bsh_hdl_lib/divider/fixed_divier.v"]"\
  "[file normalize "$origin_dir/bsh_hdl_lib/divider/variable_divider.v"]"\
+ "[file normalize "$origin_dir/bsh_hdl_lib/pwm/pwm.v"]"\
 ]
 add_files -norecurse -fileset $obj $files
 
