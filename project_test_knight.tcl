@@ -28,8 +28,7 @@
 # 3. The following remote source files that were added to the original project:-
 #
 #    "F:/work/zynq/test_hdl_lib/bsh_hdl_lib/knight/knight.v"
-#    "F:/work/zynq/test_hdl_lib/bsh_hdl_lib/divider/variable_divider.v"
-#    "F:/work/zynq/test_hdl_lib/bsh_hdl_lib/divider/fixed_divier.v"
+#    "F:/work/zynq/test_hdl_lib/bsh_hdl_lib/divider/divider.v"
 #    "F:/work/zynq/test_hdl_lib/bsh_hdl_lib/ZedBoard/zed_ledports.xdc"
 #    "F:/work/zynq/test_hdl_lib/bsh_hdl_lib/ZedBoard/zed_swports.xdc"
 #
@@ -131,8 +130,7 @@ if {[string equal [get_filesets -quiet sources_1] ""]} {
 set obj [get_filesets sources_1]
 set files [list \
  "[file normalize "$origin_dir/bsh_hdl_lib/knight/knight.v"]"\
- "[file normalize "$origin_dir/bsh_hdl_lib/divider/variable_divider.v"]"\
- "[file normalize "$origin_dir/bsh_hdl_lib/divider/fixed_divier.v"]"\
+ "[file normalize "$origin_dir/bsh_hdl_lib/divider/divider.v"]"\
 ]
 add_files -norecurse -fileset $obj $files
 
@@ -190,18 +188,15 @@ set obj [get_filesets sim_1]
 
 # Set 'sim_1' fileset properties
 set obj [get_filesets sim_1]
-set_property -name "top" -value "fixed_divider" -objects $obj
+#set_property -name "top" -value "fixed_divider" -objects $obj
 
 
 # Adding sources referenced in BDs, if not already added
 if { [get_files knight.v] == "" } {
   import_files -quiet -fileset sources_1 F:/work/zynq/test_hdl_lib/bsh_hdl_lib/knight/knight.v
 }
-if { [get_files variable_divider.v] == "" } {
-  import_files -quiet -fileset sources_1 F:/work/zynq/test_hdl_lib/bsh_hdl_lib/divider/variable_divider.v
-}
-if { [get_files knight_test.v] == "" } {
-  import_files -quiet -fileset sources_1 F:/work/zynq/test_hdl_lib/test_knight/srcs/knight_test.v
+if { [get_files divider.v] == "" } {
+  import_files -quiet -fileset sources_1 F:/work/zynq/test_hdl_lib/bsh_hdl_lib/divider/divider.v
 }
 
 
@@ -953,5 +948,7 @@ set_property -name "steps.write_bitstream.args.verbose" -value "0" -objects $obj
 
 # set the current impl run
 current_run -implementation [get_runs impl_1]
+
+
 
 puts "INFO: Project created:$project_name"

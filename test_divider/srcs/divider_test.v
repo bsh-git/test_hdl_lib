@@ -29,35 +29,41 @@ module divider_test
    (* mark_debug = "TRUE" *) wire 	       clk0;
    (* mark_debug = "TRUE" *) wire 	       clk1;
    (* mark_debug = "TRUE" *) wire 	       clk2;
+   (* mark_debug = "TRUE" *) wire 	       clkdbg;
 
 
-   fixed_divider #(24'hffffff, 24) div0(.clk_in(clk_in), .clk_out(clk0));
+   divider #(20) divdbg(.clk_in(clk_in), .load(20'h7ffff), .clk_out(clkdbg));
 
-   fixed_divider #(1'h0, 1) div1(.clk_in(clk0), .clk_out(clk1));
+   divider #(24) div0(.clk_in(clk_in), .load(24'hffffff), .clk_out(clk0));
+
+   divider #(1) div1(.clk_in(clk0), .load(1'h0), .clk_out(clk1));
    
 
-   fixed_divider #(4'b1010, 4) div2(.clk_in(clk1), .clk_out(clk2));
+   divider #(4) div2(.clk_in(clk1), .load(4'b1010), .clk_out(clk2));
 
    assign led[0] = clk0;
    assign led[1] = clk1;
    assign led[2] = clk2;
    
 
-   wire [15:0] 	 ltime = 5;
-   wire [15:0] 	 htime = 10;
-   
-   (* mark_debug = "TRUE" *) wire pwm0_out;
-   
 
-   pwd #(16) pwm0(.clk(clk0), .low_time(ltime), .high_time(htime), .out(pwm0_out));
+   (* mark_debug = "TRUE" *) wire pwm0_out;
+   (* mark_debug = "TRUE" *) wire pwm1_out;
+   (* mark_debug = "TRUE" *) wire pwm2_out;
+   
+   pwd #(16) pwm0(.clk(clk0), .wave_length(15), .high_time(10), .out(pwm0_out));
+
+   // always high
+   pwd #(8) pwm1(.clk(clk0), .wave_length(2), .high_time(3), .out(pwm1_out));
+   // always low
+   pwd #(8) pwm2(.clk(clk0), .wave_length(2), .high_time(0), .out(pwm2_out));
 
    assign led[3] = pwm0_out;
-   
+   assign led[4] = pwm1_out;
+   assign led[5] = pwm2_out;
 
-   
-   pwd #(16) pwm1(.clk(clk_in), .low_time(16'hf00), .high_time(16'h100), .out(led[4]));
-
-   pwd #(16) pwm2(.clk(clk_in), .low_time(16'h100), .high_time(16'hf00), .out(led[5]));
+   pwd #(16) pwm3(.clk(clk_in), .wave_length(512), .high_time(256), .out(led[6]));
+   pwd #(16) pwm4(.clk(clk_in), .wave_length(512), .high_time(450), .out(led[7]));
    
 
 

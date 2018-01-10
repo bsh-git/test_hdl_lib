@@ -27,8 +27,7 @@
 #
 # 3. The following remote source files that were added to the original project:-
 #
-#    "F:/work/zynq/test_hdl_lib/bsh_hdl_lib/divider/fixed_divier.v"
-#    "F:/work/zynq/test_hdl_lib/bsh_hdl_lib/divider/variable_divider.v"
+#    "F:/work/zynq/test_hdl_lib/bsh_hdl_lib/divider/divider.v"
 #    "F:/work/zynq/test_hdl_lib/bsh_hdl_lib/pwm/pwm.v"
 #    "F:/work/zynq/test_hdl_lib/bsh_hdl_lib/ZedBoard/zed_ledports.xdc"
 #    "F:/work/zynq/test_hdl_lib/bsh_hdl_lib/ZedBoard/zed_swports.xdc"
@@ -130,8 +129,7 @@ if {[string equal [get_filesets -quiet sources_1] ""]} {
 # Set 'sources_1' fileset object
 set obj [get_filesets sources_1]
 set files [list \
- "[file normalize "$origin_dir/bsh_hdl_lib/divider/fixed_divier.v"]"\
- "[file normalize "$origin_dir/bsh_hdl_lib/divider/variable_divider.v"]"\
+ "[file normalize "$origin_dir/bsh_hdl_lib/divider/divider.v"]"\
  "[file normalize "$origin_dir/bsh_hdl_lib/pwm/pwm.v"]"\
 ]
 add_files -norecurse -fileset $obj $files
@@ -194,11 +192,8 @@ set_property -name "top" -value "divider_test" -objects $obj
 
 
 # Adding sources referenced in BDs, if not already added
-if { [get_files fixed_divier.v] == "" } {
-  import_files -quiet -fileset sources_1 F:/work/zynq/test_hdl_lib/bsh_hdl_lib/divider/fixed_divier.v
-}
-if { [get_files variable_divider.v] == "" } {
-  import_files -quiet -fileset sources_1 F:/work/zynq/test_hdl_lib/bsh_hdl_lib/divider/variable_divider.v
+if { [get_files divier.v] == "" } {
+  import_files -quiet -fileset sources_1 F:/work/zynq/test_hdl_lib/bsh_hdl_lib/divider/divier.v
 }
 if { [get_files divider_test.v] == "" } {
   import_files -quiet -fileset sources_1 F:/work/zynq/test_hdl_lib/test_divider/srcs/divider_test.v

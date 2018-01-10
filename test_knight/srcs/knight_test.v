@@ -35,10 +35,9 @@ module knight_test #
    wire [23:0] 	       div;
 
 
-// fixed_divider #(DIV, 24) divider(.clk_in(clk_in), .clk_out(clk));
    assign div = speed  ? DIV >> 1 : DIV;
 
-   variable_divider #(24) divider(.clk_in(clk_in), .clk_out(clk), .load(div));
+   divider #(24) divider(.clk_in(clk_in), .clk_out(clk), .load(div));
    
    knight #(WIDTH) knight(.clk_in(clk), .led(led));
    
