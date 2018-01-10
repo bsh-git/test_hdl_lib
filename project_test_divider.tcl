@@ -102,7 +102,7 @@ if { $::argc > 0 } {
 set orig_proj_dir "[file normalize "$origin_dir/test_divider"]"
 
 # Create project
-create_project ${project_name} ./${project_name} -part xc7z020clg484-1
+create_project -force ${project_name} ./${project_name} -part xc7z020clg484-1
 
 # Set the directory path for the new project
 set proj_dir [get_property directory [current_project]]
@@ -734,6 +734,13 @@ common::send_msg_id "BD_TCL-1000" "WARNING" "This Tcl script was generated from 
 # End of cr_bd_main()
 cr_bd_main ""
 set_property SYNTH_CHECKPOINT_MODE "Hierarchical" [get_files main.bd ] 
+
+################################################################
+make_wrapper -files [get_files $proj_dir/${project_name}.srcs/sources_1/bd/main/main.bd] -top
+add_files -norecurse $proj_dir/${project_name}.srcs/sources_1/bd/main/hdl/main_wrapper.v
+set_property top main_wrapper [current_fileset]
+update_compile_order -fileset sources_1
+################################################################
 
 # Create 'synth_1' run (if not found)
 if {[string equal [get_runs -quiet synth_1] ""]} {
