@@ -23,6 +23,7 @@
 module divider_test
    (
     input 	 clk_in,
+    input 	 sw, 
     output [7:0] led
     );
 
@@ -31,10 +32,18 @@ module divider_test
    (* mark_debug = "TRUE" *) wire 	       clk2;
    (* mark_debug = "TRUE" *) wire 	       clkdbg;
 
-
    divider #(20) divdbg(.clk_in(clk_in), .load(20'h7ffff), .clk_out(clkdbg));
 
-   divider #(24) div0(.clk_in(clk_in), .load(24'hffffff), .clk_out(clk0));
+   reg 		 en = 0;
+
+   always @(posedge clk_in) begin
+      if (sw)
+	en <= 1;
+   end
+
+   wire 	 clk = clk_in & en;
+
+   divider #(24) div0(.clk_in(clk), .load(24'hffffff), .clk_out(clk0));
 
    divider #(1) div1(.clk_in(clk0), .load(1'h0), .clk_out(clk1));
    
@@ -50,21 +59,23 @@ module divider_test
    (* mark_debug = "TRUE" *) wire pwm0_out;
    (* mark_debug = "TRUE" *) wire pwm1_out;
    (* mark_debug = "TRUE" *) wire pwm2_out;
+   (* mark_debug = "TRUE" *) wire pwm0_last;
+   (* mark_debug = "TRUE" *) wire pwm1_last;
+   (* mark_debug = "TRUE" *) wire pwm2_last;
    
-   pwd #(16) pwm0(.clk(clk0), .wave_length(15), .high_time(10), .out(pwm0_out));
+   pwm #(16) pwm0(.clk(clk0), .wave_length(5), .high_time(3), .out(pwm0_out), .last_cycle(pwm0_last));
 
    // always high
-   pwd #(8) pwm1(.clk(clk0), .wave_length(2), .high_time(3), .out(pwm1_out));
+   pwm #(8) pwm1(.clk(clk0), .wave_length(2), .high_time(3), .out(pwm1_out), .last_cycle(pwm1_last));
    // always low
-   pwd #(8) pwm2(.clk(clk0), .wave_length(2), .high_time(0), .out(pwm2_out));
+   pwm #(8) pwm2(.clk(clk0), .wave_length(2), .high_time(0), .out(pwm2_out), .last_cycle(pwm2_last));
 
    assign led[3] = pwm0_out;
    assign led[4] = pwm1_out;
    assign led[5] = pwm2_out;
 
-   pwd #(16) pwm3(.clk(clk_in), .wave_length(512), .high_time(256), .out(led[6]));
-   pwd #(16) pwm4(.clk(clk_in), .wave_length(512), .high_time(450), .out(led[7]));
+  pwm #(16) pwm3(.clk(clk0), .wave_length(512), .high_time(256), .out(led[6]));
+  pwm #(16) pwm4(.clk(clk0), .wave_length(512), .high_time(450), .out(led[7]));
    
-
 
 endmodule
