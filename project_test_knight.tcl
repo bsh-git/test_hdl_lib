@@ -131,14 +131,10 @@ set obj [get_filesets sources_1]
 set files [list \
  "[file normalize "$origin_dir/bsh_hdl_lib/knight/knight.v"]"\
  "[file normalize "$origin_dir/bsh_hdl_lib/divider/divider.v"]"\
+ "[file normalize "$origin_dir/test_knight/srcs/knight_test.v"]"\
 ]
 add_files -norecurse -fileset $obj $files
 
-# Import local files from the original project
-set files [list \
- "[file normalize "$origin_dir/test_knight/srcs/knight_test.v"]"\
-]
-set imported_files [import_files -fileset sources_1 $files]
 
 # Set 'sources_1' fileset file properties for remote files
 # None
@@ -193,10 +189,10 @@ set obj [get_filesets sim_1]
 
 # Adding sources referenced in BDs, if not already added
 if { [get_files knight.v] == "" } {
-  import_files -quiet -fileset sources_1 F:/work/zynq/test_hdl_lib/bsh_hdl_lib/knight/knight.v
+  import_files -quiet -fileset sources_1 $proj_dir/../bsh_hdl_lib/knight/knight.v
 }
 if { [get_files divider.v] == "" } {
-  import_files -quiet -fileset sources_1 F:/work/zynq/test_hdl_lib/bsh_hdl_lib/divider/divider.v
+  import_files -quiet -fileset sources_1 $proj_dir/../bsh_hdl_lib/divider/divider.v
 }
 
 

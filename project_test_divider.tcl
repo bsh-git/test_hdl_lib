@@ -131,14 +131,10 @@ set obj [get_filesets sources_1]
 set files [list \
  "[file normalize "$origin_dir/bsh_hdl_lib/divider/divider.v"]"\
  "[file normalize "$origin_dir/bsh_hdl_lib/pwm/pwm.v"]"\
+ "[file normalize "$proj_dir/srcs/divider_test.v"]"\
 ]
 add_files -norecurse -fileset $obj $files
 
-# Import local files from the original project
-set files [list \
- "[file normalize "$origin_dir/test_divider/srcs/divider_test.v"]"\
-]
-set imported_files [import_files -fileset sources_1 $files]
 
 # Set 'sources_1' fileset file properties for remote files
 # None
