@@ -737,6 +737,15 @@ add_files -norecurse $proj_dir/${project_name}.srcs/sources_1/bd/main/hdl/main_w
 set_property top main_wrapper [current_fileset]
 update_compile_order -fileset sources_1
 ################################################################
+file mkdir $proj_dir/${project_name}.srcs/constrs_1
+file mkdir $proj_dir/${project_name}.srcs/constrs_1/new
+set constrs_file $proj_dir/${project_name}.srcs/constrs_1/new/debug.xdc
+close [ open $constrs_file w ]
+add_files -fileset constrs_1 $constrs_file
+create_ip_run [get_files -of_objects [get_fileset sources_1] $proj_dir/${project_name}.srcs/sources_1/bd/main/main.bd]
+set_property target_constrs_file $constrs_file [current_fileset -constrset]
+################################################################
+
 
 # Create 'synth_1' run (if not found)
 if {[string equal [get_runs -quiet synth_1] ""]} {
