@@ -180,11 +180,14 @@ if {[string equal [get_filesets -quiet sim_1] ""]} {
 
 # Set 'sim_1' fileset object
 set obj [get_filesets sim_1]
-# Empty (no sources present)
+set files [list \
+ "[file normalize "$origin_dir/bsh_hdl_lib/pwm/pwm_sim.v"]"\
+]
+add_files -norecurse -fileset $obj $files
 
 # Set 'sim_1' fileset properties
 set obj [get_filesets sim_1]
-set_property -name "top" -value "pwm_test" -objects $obj
+set_property -name "top" -value "pwm_sim" -objects $obj
 
 
 # Adding sources referenced in BDs, if not already added
